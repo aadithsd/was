@@ -1,0 +1,144 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IP Address Class Checker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>IP Address Class Checker</h1>
+
+    <p>Enter an IPv4 address:</p>
+
+    <input type="text" id="ipAddress"
+           placeholder="Example: 192.168.1.10">
+
+    <br>
+
+    <button onclick="checkIP()">Check IP Class</button>
+
+    <div id="result"></div>
+
+</div>
+
+
+<script>
+
+function checkIP() {
+
+    // Get IP address
+    let ip = document.getElementById("ipAddress").value.trim();
+
+    // Split IP into four parts
+    let parts = ip.split(".");
+
+    // Check whether IP has exactly 4 parts
+    if (parts.length !== 4) {
+
+        document.getElementById("result").innerHTML =
+            "❌ Invalid IP Address";
+
+        return;
+    }
+
+    // Validate each part
+    for (let part of parts) {
+
+        if (part === "" || isNaN(part) ||
+            Number(part) < 0 || Number(part) > 255) {
+
+            document.getElementById("result").innerHTML =
+                "❌ Invalid IP Address";
+
+            return;
+        }
+    }
+
+    // First octet
+    let firstOctet = Number(parts[0]);
+
+    let ipClass = "";
+
+    // Determine IP class
+    if (firstOctet >= 1 && firstOctet <= 126) {
+
+        ipClass = "Class A";
+
+    }
+    else if (firstOctet >= 128 && firstOctet <= 191) {
+
+        ipClass = "Class B";
+
+    }
+    else if (firstOctet >= 192 && firstOctet <= 223) {
+
+        ipClass = "Class C";
+
+    }
+    else if (firstOctet >= 224 && firstOctet <= 239) {
+
+        ipClass = "Class D (Multicast)";
+
+    }
+    else if (firstOctet >= 240 && firstOctet <= 255) {
+
+        ipClass = "Class E (Experimental)";
+
+    }
+    else {
+
+        ipClass = "Special / Reserved";
+
+    }
+
+    // Display result
+    document.getElementById("result").innerHTML =
+        "IP Address: " + ip + "<br>" +
+        "IP Class: " + ipClass;
+}
+
+</script>
+
+</body>
+</html>
+```

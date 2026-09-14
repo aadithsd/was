@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><title>Cookie Demonstration</title>
+</head><body bgcolor=red>
+<h2>Cookies Demonstration-Create-Show-Delete</h2>
+<marquee><h1>Cookies Demonstration-Create-Show-Delete<h1></marquee>
+<label>Enter your name:</label>
+<input type="text" id="username">
+<br><br>
+<button onclick="setCookie()">Create Cookie</button>
+<button onclick="showCookie()">Show Cookie</button>
+<button onclick="deleteCookie()">Delete Cookie</button>
+<p id="result"></p>
+<script>
+function setCookie() {
+    let name = document.getElementById("username").value;
+    if (name == "") {
+        alert("Please enter your name");
+        return;}
+    // Create a cookie
+    document.cookie = "username=" + name + "; max-age=3600; path=/";
+    document.getElementById("result").innerHTML =
+        "Cookie created successfully!";
+}
+function showCookie() {
+    let cookies = document.cookie;
+    if (cookies == "") {
+        document.getElementById("result").innerHTML =
+            "No cookies found.";}
+    else {
+document.getElementById("result").innerHTML =
+            "Stored Cookie: " + cookies;
+    }}
+function deleteCookie() {
+//first Delete the cookie by setting its age to zero-Initilize it
+document.cookie = "username=; max-age=0; path=/";
+document.getElementById("result").innerHTML ="Cookie deleted successfully!";
+}
+</script>
+</body>
+</html>

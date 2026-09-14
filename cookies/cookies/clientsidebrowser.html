@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client-Side Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f5f5f5;
+        }
+
+        .section {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #999;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section">
+
+        <h1>Client-Side Information</h1>
+
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+
+            <tbody id="clientInfo"></tbody>
+        </table>
+
+    </div>
+
+    <script>
+
+        function getClientInfo() {
+
+            const ua = navigator.userAgent;
+
+            let browser = "Unknown";
+            let version = "Unknown";
+
+            // Detect browser
+            if (ua.includes("Edg/")) {
+                browser = "Microsoft Edge";
+                version = ua.match(/Edg\/([\d.]+)/)?.[1] || "Unknown";
+
+            } else if (ua.includes("Chrome/")) {
+                browser = "Google Chrome";
+                version = ua.match(/Chrome\/([\d.]+)/)?.[1] || "Unknown";
+
+            } else if (ua.includes("Firefox/")) {
+                browser = "Mozilla Firefox";
+                version = ua.match(/Firefox\/([\d.]+)/)?.[1] || "Unknown";
+
+            } else if (ua.includes("Safari/")) {
+                browser = "Apple Safari";
+                version = ua.match(/Version\/([\d.]+)/)?.[1] || "Unknown";
+            }
+
+            // Client-side information
+            const details = {
+
+                "Browser Name": browser,
+
+                "Browser Version": version,
+
+                "Operating System / Platform":
+                    navigator.platform,
+
+                "Language":
+                    navigator.language,
+
+                "Cookies Enabled":
+                    navigator.cookieEnabled ? "Yes" : "No",
+
+                "JavaScript Enabled":
+                    "Yes",
+
+                "Screen Resolution":
+                    screen.width + " × " + screen.height,
+
+                "Available Screen Size":
+                    screen.availWidth + " × " + screen.availHeight,
+
+                "Color Depth":
+                    screen.colorDepth + " bits",
+
+                "Window Size":
+                    window.innerWidth + " × " + window.innerHeight,
+
+                "Online Status":
+                    navigator.onLine ? "Online" : "Offline",
+
+                "CPU Cores":
+                    navigator.hardwareConcurrency || "Not available",
+
+                "Device Memory":
+                    navigator.deviceMemory
+                        ? navigator.deviceMemory + " GB"
+                        : "Not available",
+
+                "User Agent":
+                    navigator.userAgent
+            };
+
+            const tbody = document.getElementById("clientInfo");
+
+            for (const key in details) {
+
+                const row = document.createElement("tr");
+
+                const property = document.createElement("td");
+                property.textContent = key;
+
+                const value = document.createElement("td");
+                value.textContent = details[key];
+
+                row.appendChild(property);
+                row.appendChild(value);
+
+                tbody.appendChild(row);
+            }
+        }
+        // Display client information
+        getClientInfo();
+    </script>
+</body>
+</html>
+

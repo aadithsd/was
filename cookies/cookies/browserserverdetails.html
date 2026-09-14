@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client and Server Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: inline-block;
+            width: 180px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 250px;
+            padding: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #999;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Client and Server Information</h1>
+
+    <!-- Client Details -->
+    <div class="section">
+        <h2>Client Browser Details</h2>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+            <tbody id="clientInfo"></tbody>
+        </table>
+    </div>
+
+    <!-- Server Details -->
+    <div class="section">
+        <h2>Enter Server Details</h2>
+
+        <label>Server Name:</label>
+        <input type="text" id="serverName"><br>
+
+        <label>Server Version:</label>
+        <input type="text" id="serverVersion"><br>
+
+        <label>Server Script Language:</label>
+        <input type="text" id="serverLanguage"><br>
+
+        <button onclick="showServerInfo()">Display Server Details</button>
+
+        <div id="serverOutput"></div>
+    </div>
+
+    <script>
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown";
+            let version = "Unknown";
+            if (ua.includes("Chrome")) {
+                browser = "Chrome";
+                version = ua.match(/Chrome\/([\d.]+)/)?.[1];
+            } else if (ua.includes("Firefox")) {
+                browser = "Firefox";
+                version = ua.match(/Firefox\/([\d.]+)/)?.[1];
+            } else if (ua.includes("Safari")) {
+                browser = "Safari";
+                version = ua.match(/Version\/([\d.]+)/)?.[1];
+            } else if (ua.includes("Edg")) {
+                browser = "Microsoft Edge";
+                version = ua.match(/Edg\/([\d.]+)/)?.[1];
+            }
+            const details = {
+                "Browser Name": browser,
+                "Browser Version": version,
+                "Platform": navigator.platform,
+                "Language": navigator.language,
+                "Cookies Enabled": navigator.cookieEnabled,
+                "JavaScript Engine": "JavaScript",
+                "User Agent": navigator.userAgent
+            };
+            const tbody = document.getElementById("clientInfo");
+            for (const key in details) {
+                const row = `<tr>
+                                <td>${key}</td>
+                                <td>${details[key]}</td>
+                             </tr>`;
+                tbody.innerHTML += row;
+            }
+        }
+        function showServerInfo() {
+            const name = document.getElementById("serverName").value;
+            const version = document.getElementById("serverVersion").value;
+            const language = document.getElementById("serverLanguage").value;
+            document.getElementById("serverOutput").innerHTML = `
+                <h3>Server Details</h3>
+                <table>
+                    <tr><th>Property</th><th>Value</th></tr>
+                    <tr><td>Server Name</td><td>${name}</td></tr>
+                    <tr><td>Server Version</td><td>${version}</td></tr>
+                    <tr><td>Script Language</td><td>${language}</td></tr>
+                </table>
+            `;
+        }
+        getBrowserInfo();
+    </script>
+</body>
+</html>
