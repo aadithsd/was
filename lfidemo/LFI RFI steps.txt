@@ -1,0 +1,55 @@
+https://www.anysite.com/?file=cat
+
+the vulnerable PHP code conceptually does:
+
+include($_GET['file']);
+
+An attacker might try a path such as:
+
+?file=/etc/passwd
+
+resulting in:
+
+paste in browser and run
+http://localhost/lfidemo/lfi.php?file=D:\durga9.bat
+or
+http://localhost/lfidemo/lfi.php?file=D:\h1.html
+or
+http://localhost/lfidemo/lfi.php?file=D:\Dir\file.exe
+or
+
+https://localhost/lfidemo/?file=/etc/passwd
+
+On a Linux lab machine, /etc/passwd is a readable account-information file. It normally does not contain users' actual passwords; modern Linux systems store password hashes in /etc/shadow, which is normally protected.
+
+Simple safe classroom demonstration
+
+Create lfi.php on your own XAMPP/Linux lab server:
+
+<?php
+$file = $_GET['file'];
+
+echo "<h2>File Content</h2>";
+include($file);
+?>
+
+Then create a harmless test file:
+
+demo.txt
+
+containing:
+
+This is a confidential demonstration file.
+LFI vulnerability successfully accessed this file.
+
+Open:
+
+http://localhost/lfidemo/lfi.php?file=demo.txt
+
+Then demonstrate the vulnerability by attempting path traversal within your lab:
+
+http://localhost/lfidemo/lfi.php?file=../../demo.txt
+
+This illustrates the same LFI concept without targeting a third-party website.
+
+Important: Don't use https://www.anysite.com/?file=/etc/passwd against a site you don't own or don't have explicit authorization to test. For a classroom demonstration, localhost, DVWA, OWASP WebGoat, or another intentionally vulnerable lab is the appropriate environment.

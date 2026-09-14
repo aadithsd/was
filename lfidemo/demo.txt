@@ -1,0 +1,22 @@
+This is a confidential demonstration file.
+LFI vulnerability successfully accessed this file.
+
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+mark:x:1001:1001:mark,,,:/home/mark:/bin/bash
+bca::x:1001:1001:mark,,,:/home/mark:/bin/bash
+mca::x:1001:1001:mark,,,:/home/mark:/bin/bash
+imca::x:1001:1001:mark,,,:/home/mark:/bin/bash
+
+mark:x:1001:1001:mark,,,:/home/mark:/bin/bash
+[--] - [--] [--] [-----] [--------] [--------]
+|    |   |    |     |         |        |
+|    |   |    |     |         |        +-> 7. Login shell
+|    |   |    |     |         +----------> 6. Home directory
+|    |   |    |     +--------------------> 5. GECOS
+|    |   |    +--------------------------> 4. GID
+|    |   +-------------------------------> 3. UID
+|    +-----------------------------------> 2. Password
++----------------------------------------> 1. Username

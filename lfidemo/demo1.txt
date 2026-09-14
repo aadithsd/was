@@ -1,0 +1,14 @@
+
+This is a demo1 confidential demonstration file.
+LFI vulnerability successfully accessed this file.
+
+Field	Position	Example
+Username	1	mark.							
+Password placeholder	2	x.							
+UID	3	1001.									
+GID	4	1001.									
+GECOS/comment	5	mark.								
+Home directory	6	/home/mark.							
+Login shell	7	/bin/bash.							
+
+
