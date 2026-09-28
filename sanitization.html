@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secure Registration Demo</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 500px;
+            margin: 40px auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Secure Registration Form</h2>
+
+<form id="registrationForm">
+
+    <label>Full Name</label>
+    <input type="text" id="name">
+    <div id="nameError" class="error"></div>
+
+    <label>Email</label>
+    <input type="text" id="email">
+    <div id="emailError" class="error"></div>
+
+    <label>Username</label>
+    <input type="text" id="username">
+    <div id="usernameError" class="error"></div>
+
+    <label>Phone</label>
+    <input type="text" id="phone">
+    <div id="phoneError" class="error"></div>
+
+    <label>Password</label>
+    <input type="password" id="password">
+    <div id="passwordError" class="error"></div>
+
+    <label>Age</label>
+    <input type="number" id="age">
+    <div id="ageError" class="error"></div>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p id="result"></p>
+
+<script>
+
+function sanitizeHTML(input) {
+
+    const element = document.createElement("div");
+
+    // textContent treats input as text rather than HTML
+    element.textContent = input;
+
+    return element.textContent;
+}
+
+
+function validateName(name) {
+
+    name = sanitizeHTML(name);
+
+    if (name.length < 2) {
+        return "Name must contain at least 2 characters.";
+    }
+
+    if (!/^[A-Za-z ]+$/.test(name)) {
+        return "Name can contain only letters and spaces.";
+    }
+
+    return "";
+}
+
+
+function validateEmail(email) {
+
+    email = sanitizeHTML(email);
+
+    const pattern =
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    if (!pattern.test(email)) {
+        return "Enter a valid email address.";
+    }
+
+    return "";
+}
+
+
+function validateUsername(username) {
+
+    username = sanitizeHTML(username);
+
+    if (!/^[A-Za-z0-9_]{4,20}$/.test(username)) {
+        return "Username must contain 4-20 letters, numbers or _.";
+    }
+
+    return "";
+}
+
+
+function validatePhone(phone) {
+
+    phone = sanitizeHTML(phone);
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        return "Phone number must contain exactly 10 digits.";
+    }
+
+    return "";
+}
+
+
+function validatePassword(password) {
+
+    if (password.length < 8) {
+        return "Password must contain at least 8 characters.";
+    }
+
+    if (!/[A-Z]/.test(password)) {
+        return "Password must contain an uppercase letter.";
+    }
+
+    if (!/[a-z]/.test(password)) {
+        return "Password must contain a lowercase letter.";
+    }
+
+    if (!/[0-9]/.test(password)) {
+        return "Password must contain a number.";
+    }
+
+    return "";
+}
+
+
+function validateAge(age) {
+
+    age = sanitizeHTML(age);
+
+    if (age < 18 || age > 100) {
+        return "Age must be between 18 and 100.";
+    }
+
+    return "";
+}
+
+
+document.getElementById("registrationForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    // Get values
+    const name =
+        document.getElementById("name").value;
+
+    const email =
+        document.getElementById("email").value;
+
+    const username =
+        document.getElementById("username").value;
+
+    const phone =
+        document.getElementById("phone").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    const age =
+        document.getElementById("age").value;
+
+
+    // Validate each field
+
+    document.getElementById("nameError").textContent =
+        validateName(name);
+
+    document.getElementById("emailError").textContent =
+        validateEmail(email);
+
+    document.getElementById("usernameError").textContent =
+        validateUsername(username);
+
+    document.getElementById("phoneError").textContent =
+        validatePhone(phone);
+
+    document.getElementById("passwordError").textContent =
+        validatePassword(password);
+
+    document.getElementById("ageError").textContent =
+        validateAge(age);
+
+
+    // Check whether any validation error exists
+
+    const errors = document.querySelectorAll(".error");
+
+    let valid = true;
+
+    errors.forEach(function(error) {
+        if (error.textContent !== "") {
+            valid = false;
+        }
+    });
+
+
+    if (valid) {
+
+        const safeName = sanitizeHTML(name);
+
+        document.getElementById("result").textContent =
+            "Registration successful for " + safeName;
+
+        document.getElementById("result").className =
+            "success";
+
+    } else {
+
+        document.getElementById("result").textContent =
+            "Please correct the highlighted fields.";
+
+        document.getElementById("result").className =
+            "error";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
