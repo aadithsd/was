@@ -1,0 +1,58 @@
+<html>
+
+<body>
+    <h2> Registration Form </h2>
+    <form id="myform">
+        name:
+        <input type="text" id="name" required>
+        <br> <br>
+
+        age:
+        <input type="number" id="age" min="18" max="26" required>
+        <br> <br>
+
+        email:
+        <input type="email" id="email" required>
+        <br> <br>
+
+        password:
+        <input type="password" id="pass" required>
+
+        <button type="submit">Register</button>
+
+    </form>
+    <p id="res"></p>
+
+    <script>
+        document.getElementById("myform").onsubmit = function (event) {
+            event.preventDefault();
+            let name = document.getElementById("name").value.trim()
+            let age = Number(document.getElementById("age").value)
+            let email = document.getElementById("email").value.trim()
+            let pass = document.getElementById("pass").value
+
+            let msg = ""
+
+            if (name.length < 2) {
+                msg = "invalid name"
+            }
+            else if (!email.includes("@") || !email.includes(".")) {
+                msg = "invalid email"
+            }
+            else if (pass.length < 8 || !/[A-Z]/.test(pass) || !/[0-9]/.test(pass)) {
+                msg = "pass must be above 8 chars, must have a capital and a digit"
+            }
+            else {
+                msg = "reg successfull"
+            }
+
+
+            document.getElementById("res").textContent = msg;
+        };
+
+    </script>
+
+    </form>
+</body>
+
+</html>
